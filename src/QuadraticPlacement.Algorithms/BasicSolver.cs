@@ -251,4 +251,31 @@ public class BasicSolver : IPlacementSolver
 
         return (matrix, rhs);
     }
+
+    /// <summary>
+    /// Собирает полный массив координат из вычисленных свободных и фиксированных
+    /// </summary>
+    private double[] AssembleCoordinates(
+        double[] freeCoords,
+        int[] freeIndices,
+        int[] fixedIndices,
+        Graph graph,
+        Coordinate coord)
+    {
+        double[] result = new double[graph.VertexCount];
+
+        // Свободные вершины
+        for (int i = 0; i < freeIndices.Length; i++)
+        {
+            result[freeIndices[i] - 1] = freeCoords[i];  // to 0-based
+        }
+
+        // Фиксированные вершины
+        foreach (var (index, fv) in graph.FixedVertices)
+        {
+            result[index - 1] = coord == Coordinate.X ? fv.X : fv.Y;
+        }
+
+        return result;
+    }
 }
