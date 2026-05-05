@@ -108,7 +108,26 @@ class Program
 
     static void HandleConvertCommand(string[] args)
     {
-        Console.WriteLine("Команда convert в разработке");
+        string input = GetArgument(args, "--input") ?? throw new Exception("Не указан --input");
+        string output = GetArgument(args, "--output") ?? throw new Exception("Не указан --output");
+        string toFormat = GetArgument(args, "--to-format") ?? throw new Exception("Не указан --to-format");
+
+        Console.WriteLine($"Конвертация {input} в {toFormat} формат...");
+
+        if (toFormat.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            Data.GraphFormatConverter.TextFileToJsonFile(input, output);
+        }
+        else if (toFormat.Equals("text", StringComparison.OrdinalIgnoreCase))
+        {
+            Data.GraphFormatConverter.JsonFileToTextFile(input, output);
+        }
+        else
+        {
+            throw new Exception($"Неподдерживаемый формат: {toFormat}");
+        }
+
+        Console.WriteLine($"Конвертация завершена: {output}");
     }
 
     static void HandleSolveCommand(string[] args)
