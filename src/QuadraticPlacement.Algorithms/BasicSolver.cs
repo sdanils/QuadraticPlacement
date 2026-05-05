@@ -10,6 +10,8 @@ public class BasicSolver : IPlacementSolver
 {
     public string Name => "Базовый алгоритм (матрица Лапласа)";
 
+    private enum Coordinate { X, Y }
+
     /// <summary>
     /// Решает задачу размещения для заданного графа
     /// </summary>
@@ -157,5 +159,96 @@ public class BasicSolver : IPlacementSolver
             ColumnIndices = colIndices.ToArray(),
             RowPointers = rowPointers.ToArray()
         };
+    }
+
+    /// <summary>
+    /// Строит систему линейных уравнений для свободных вершин
+    /// L_free * x_free = b, где b учитывает фиксированные вершины
+    /// </summary>
+    private (SparseMatrixCSR matrix, double[] rhs) BuildLinearSystem(
+        SparseMatrixCSR laplacian,
+        int[] freeIndices,
+        int[] fixedIndices,
+        Graph graph,
+        Coordinate coord)
+    {
+        int nFree = freeIndices.Length;
+        int nFixed = fixedIndices.Length;
+
+        // Создаём отображение: глобальный индекс -> локальный индекс (0-based)
+        var globalToLocal = new Dictionary<int, int>();
+        for (int i = 0; i < freeIndices.Length; i++)
+        {
+            globalToLocal[freeIndices[i]] = i;
+        }
+
+        // Строим подсистему для свободных вершин
+        var values = new List<double>();
+        var colIndices = new List<int>();
+        var rowPointers = new List<int> { 0 };
+        var rhs = new double[nFree];
+
+        for (int i = 0; i < nFree; i++)
+        {
+            int globalRow = freeIndices[i];
+
+            // Копируем строку матрицы Лапласа для свободной вершины
+            int rowStart = laplacian.RowPointers[globalRow - 1];
+            int rowEnd = laplacian.RowPointers[globalRow];
+
+            // Диагональный элемент
+            double diag = 0;
+            for (int j = rowStart; j < rowEnd; j++)
+            {
+                int globalCol = laplacian.ColumnIndices[j] + 1;  // back to 1-based
+                if (globalCol == globalRow)
+                {
+                    diag = laplacian.Values[j];
+                    break;
+                }
+            }
+
+            values.Add(diag);
+            colIndices.Add(i);
+
+            // Недиагональные элементы (только для свободных вершин)
+            for (int j = rowStart; j < rowEnd; j++)
+            {
+                int globalCol = laplacian.ColumnIndices[j] + 1;
+                if (globalCol != globalRow && globalToLocal.ContainsKey(globalCol))
+                {
+                    values.Add(laplacian.Values[j]);
+                    colIndices.Add(globalToLocal[globalCol]);
+                }
+            }
+
+            rowPointers.Add(values.Count);
+
+            // Вычисляем правую часть: -sum(L_ij * x_j) для фиксированных вершин
+            rhs[i] = 0;
+            for (int j = rowStart; j < rowEnd; j++)
+            {
+                int globalCol = laplacian.ColumnIndices[j] + 1;
+                if (!globalToLocal.ContainsKey(globalCol))
+                {
+                    // Это фиксированная вершина
+                    double fixedCoord = coord == Coordinate.X
+                        ? graph.FixedVertices[globalCol].X
+                        : graph.FixedVertices[globalCol].Y;
+                    rhs[i] -= laplacian.Values[j] * fixedCoord;
+                }
+            }
+        }
+
+        var matrix = new SparseMatrixCSR
+        {
+            RowCount = nFree,
+            ColumnCount = nFree,
+            Values = values.ToArray(),
+            ColumnIndices = colIndices.ToArray(),
+            RowPointers = rowPointers.ToArray()
+        };
+
+        return (matrix, rhs);
     }
 }
