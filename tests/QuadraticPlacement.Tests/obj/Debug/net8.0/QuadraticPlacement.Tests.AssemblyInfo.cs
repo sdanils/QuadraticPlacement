@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuadraticPlacement.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e56fefc5419a21b3103ee266960e9336139acd6b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b14e61dd6574e9fb8f7a174dec82eef1a00b3bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuadraticPlacement.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuadraticPlacement.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
