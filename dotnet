@@ -1,0 +1,5 @@
+#!/bin/bash
+# Обёртка для локального .NET SDK
+export DOTNET_ROOT=/home/dssalomasov/projects/home/integration_scheme/.dotnet
+export PATH=$PATH:/home/dssalomasov/projects/home/integration_scheme/.dotnet
+/home/dssalomasov/projects/home/integration_scheme/.dotnet/dotnet "$@"
