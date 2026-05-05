@@ -1,0 +1,15 @@
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/bin/Debug/net8.0/QuadraticPlacement.Algorithms.deps.json
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/bin/Debug/net8.0/QuadraticPlacement.Algorithms.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/bin/Debug/net8.0/QuadraticPlacement.Algorithms.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/bin/Debug/net8.0/QuadraticPlacement.Core.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/bin/Debug/net8.0/QuadraticPlacement.Core.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.csproj.AssemblyReference.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.GeneratedMSBuildEditorConfig.editorconfig
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.AssemblyInfoInputs.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.AssemblyInfo.cs
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.csproj.CoreCompileInputs.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/Quadrati.18D9E4D2.Up2Date
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/refint/QuadraticPlacement.Algorithms.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/QuadraticPlacement.Algorithms.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Algorithms/obj/Debug/net8.0/ref/QuadraticPlacement.Algorithms.dll

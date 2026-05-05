@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{77708992
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Tests", "tests\QuadraticPlacement.Tests\QuadraticPlacement.Tests.csproj", "{E5880E2B-3E46-4735-A757-7C164810144A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Algorithms", "src\QuadraticPlacement.Algorithms\QuadraticPlacement.Algorithms.csproj", "{45D7E6F0-970F-45D4-842A-AFD481032FDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{E5880E2B-3E46-4735-A757-7C164810144A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5880E2B-3E46-4735-A757-7C164810144A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5880E2B-3E46-4735-A757-7C164810144A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D7E6F0-970F-45D4-842A-AFD481032FDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D7E6F0-970F-45D4-842A-AFD481032FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D7E6F0-970F-45D4-842A-AFD481032FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D7E6F0-970F-45D4-842A-AFD481032FDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{10833D69-871E-4CE8-8E73-D21D42C5E6B2} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 		{E5880E2B-3E46-4735-A757-7C164810144A} = {77708992-5544-41A3-9BFA-C3244CDCEFAD}
+		{45D7E6F0-970F-45D4-842A-AFD481032FDE} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 	EndGlobalSection
 EndGlobal
