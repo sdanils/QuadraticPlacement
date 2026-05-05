@@ -132,7 +132,68 @@ class Program
 
     static void HandleSolveCommand(string[] args)
     {
-        Console.WriteLine("Команда solve в разработке");
+        string input = GetArgument(args, "--input") ?? throw new Exception("Не указан --input");
+        string algorithmStr = GetArgument(args, "--algorithm") ?? throw new Exception("Не указан --algorithm");
+        string output = GetArgument(args, "--output") ?? throw new Exception("Не указан --output");
+
+        Console.WriteLine($"Загрузка графа из {input}...");
+
+        var graphContent = File.ReadAllText(input);
+        Core.Graph graph;
+
+        if (input.EndsWith(".json"))
+        {
+            graph = Data.JsonGraphParser.Parse(graphContent);
+        }
+        else
+        {
+            graph = Data.TextGraphParser.Parse(graphContent);
+        }
+
+        Console.WriteLine($"Граф загружен: {graph.VertexCount} вершин, {graph.EdgeCount} рёбер");
+
+        Core.IPlacementSolver solver = algorithmStr.ToLower() switch
+        {
+            "basic" => new Algorithms.BasicSolver(),
+            "heuristic" => new Algorithms.HeuristicSolver(),
+            _ => throw new Exception($"Неизвестный алгоритм: {algorithmStr}")
+        };
+
+        Console.WriteLine($"Запуск алгоритма: {solver.Name}");
+
+        var result = solver.Solve(graph);
+
+        Console.WriteLine($"Алгоритм завершён за {result.ComputationTime.TotalSeconds:F2} сек");
+        Console.WriteLine($"Метрики:");
+        Console.WriteLine($"  Суммарная длина: {result.Metrics.TotalWeightedLength:F2}");
+        Console.WriteLine($"  Макс. ребро: {result.Metrics.MaxEdgeLength:F2}");
+        Console.WriteLine($"  Среднее: {result.Metrics.AverageEdgeLength:F2}");
+
+        // Сохраняем результат в JSON
+        var resultData = new
+        {
+            algorithm = solver.Name,
+            vertexCount = graph.VertexCount,
+            edgeCount = graph.EdgeCount,
+            xCoordinates = result.XCoordinates,
+            yCoordinates = result.YCoordinates,
+            metrics = new
+            {
+                totalLength = result.Metrics.TotalWeightedLength,
+                maxLength = result.Metrics.MaxEdgeLength,
+                minLength = result.Metrics.MinEdgeLength,
+                avgLength = result.Metrics.AverageEdgeLength
+            },
+            computationTimeMs = result.ComputationTime.TotalMilliseconds
+        };
+
+        var json = System.Text.Json.JsonSerializer.Serialize(resultData, new System.Text.Json.JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
+
+        File.WriteAllText(output, json);
+        Console.WriteLine($"\nРезультат сохранён в: {output}");
     }
 
     static void HandleReportCommand(string[] args)
