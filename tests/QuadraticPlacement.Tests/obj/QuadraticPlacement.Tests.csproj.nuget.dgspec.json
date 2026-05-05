@@ -124,6 +124,74 @@
         }
       }
     },
+    "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj",
+        "projectName": "QuadraticPlacement.Data",
+        "projectPath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj",
+        "packagesPath": "/home/dssalomasov/.nuget/packages/",
+        "outputPath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/dssalomasov/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Core/QuadraticPlacement.Core.csproj": {
+                "projectPath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Core/QuadraticPlacement.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/dssalomasov/projects/home/integration_scheme/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/QuadraticPlacement.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -151,6 +219,9 @@
               },
               "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Core/QuadraticPlacement.Core.csproj": {
                 "projectPath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Core/QuadraticPlacement.Core.csproj"
+              },
+              "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj": {
+                "projectPath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj"
               }
             }
           }

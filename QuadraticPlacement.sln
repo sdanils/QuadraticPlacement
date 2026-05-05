@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Algorith
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Data", "src\QuadraticPlacement.Data\QuadraticPlacement.Data.csproj", "{32E1C659-6C82-43E3-AFDC-BA1B02355C8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Visualization", "src\QuadraticPlacement.Visualization\QuadraticPlacement.Visualization.csproj", "{E43E6ECD-A400-4DD9-A611-FCE351EDA87B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Reporting", "src\QuadraticPlacement.Reporting\QuadraticPlacement.Reporting.csproj", "{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,11 +44,21 @@ Global
 		{32E1C659-6C82-43E3-AFDC-BA1B02355C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E1C659-6C82-43E3-AFDC-BA1B02355C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E1C659-6C82-43E3-AFDC-BA1B02355C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{10833D69-871E-4CE8-8E73-D21D42C5E6B2} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 		{E5880E2B-3E46-4735-A757-7C164810144A} = {77708992-5544-41A3-9BFA-C3244CDCEFAD}
 		{45D7E6F0-970F-45D4-842A-AFD481032FDE} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 		{32E1C659-6C82-43E3-AFDC-BA1B02355C8C} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
+		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
+		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 	EndGlobalSection
 EndGlobal
