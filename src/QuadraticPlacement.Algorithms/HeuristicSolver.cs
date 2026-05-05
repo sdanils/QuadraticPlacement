@@ -199,20 +199,41 @@ public class HeuristicSolver : IPlacementSolver
 
         var (x, y) = InitializePositions(graph);
 
+        // Адаптивное число итераций в зависимости от размера графа
+        int adaptiveMaxIterations = graph.VertexCount switch
+        {
+            < 100 => 500,
+            < 1000 => 200,
+            _ => 100  // Для больших графов меньше итераций
+        };
+
         double temperature = InitialTemperature;
         double prevEnergy = double.MaxValue;
+        int stagnationCount = 0;
+        const int maxStagnation = 10;  // Остановиться если нет улучшений 10 итераций подряд
 
-        for (int iteration = 0; iteration < MaxIterations; iteration++)
+        for (int iteration = 0; iteration < adaptiveMaxIterations; iteration++)
         {
             var (forcesX, forcesY) = ComputeForces(graph, x, y);
 
             UpdatePositions(x, y, forcesX, forcesY, graph, temperature);
 
             double currentEnergy = ComputeSystemEnergy(graph, x, y);
-            if (Math.Abs(prevEnergy - currentEnergy) < ConvergenceThreshold)
-                break;
-            prevEnergy = currentEnergy;
 
+            // Проверка на сходимость с учётом размера графа
+            double energyThreshold = ConvergenceThreshold * Math.Max(1, graph.VertexCount / 1000.0);
+            if (Math.Abs(prevEnergy - currentEnergy) < energyThreshold)
+            {
+                stagnationCount++;
+                if (stagnationCount >= maxStagnation)
+                    break;  // Ранняя остановка при стагнации
+            }
+            else
+            {
+                stagnationCount = 0;
+            }
+
+            prevEnergy = currentEnergy;
             temperature *= CoolingRate;
         }
 
