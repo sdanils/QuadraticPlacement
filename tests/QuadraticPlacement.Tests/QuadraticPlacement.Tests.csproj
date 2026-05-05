@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\QuadraticPlacement.Core\QuadraticPlacement.Core.csproj" />
+    <ProjectReference Include="..\..\src\QuadraticPlacement.Algorithms\QuadraticPlacement.Algorithms.csproj" />
   </ItemGroup>
 
 </Project>
