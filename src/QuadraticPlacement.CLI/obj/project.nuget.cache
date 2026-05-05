@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "kf11U5ncLlc=",
+  "success": true,
+  "projectFilePath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.CLI/QuadraticPlacement.CLI.csproj",
+  "expectedPackageFiles": [
+    "/home/dssalomasov/.nuget/packages/harfbuzzsharp/8.3.1.1/harfbuzzsharp.8.3.1.1.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/harfbuzzsharp.nativeassets.linux/8.3.1.1/harfbuzzsharp.nativeassets.linux.8.3.1.1.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/harfbuzzsharp.nativeassets.macos/8.3.1.1/harfbuzzsharp.nativeassets.macos.8.3.1.1.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/harfbuzzsharp.nativeassets.win32/8.3.1.1/harfbuzzsharp.nativeassets.win32.8.3.1.1.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/scottplot/5.1.58/scottplot.5.1.58.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/skiasharp/3.119.0/skiasharp.3.119.0.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/skiasharp.harfbuzz/3.119.0/skiasharp.harfbuzz.3.119.0.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/skiasharp.nativeassets.linux.nodependencies/3.119.0/skiasharp.nativeassets.linux.nodependencies.3.119.0.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/skiasharp.nativeassets.macos/3.119.0/skiasharp.nativeassets.macos.3.119.0.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/skiasharp.nativeassets.win32/3.119.0/skiasharp.nativeassets.win32.3.119.0.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/system.io.pipelines/10.0.7/system.io.pipelines.10.0.7.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/system.text.encodings.web/10.0.7/system.text.encodings.web.10.0.7.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/system.text.json/10.0.7/system.text.json.10.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}

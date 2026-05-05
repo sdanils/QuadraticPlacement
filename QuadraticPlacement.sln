@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Visualiz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.Reporting", "src\QuadraticPlacement.Reporting\QuadraticPlacement.Reporting.csproj", "{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadraticPlacement.CLI", "src\QuadraticPlacement.CLI\QuadraticPlacement.CLI.csproj", "{2270E768-86DB-402D-B92B-B351BF9E0576}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2270E768-86DB-402D-B92B-B351BF9E0576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2270E768-86DB-402D-B92B-B351BF9E0576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2270E768-86DB-402D-B92B-B351BF9E0576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2270E768-86DB-402D-B92B-B351BF9E0576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{10833D69-871E-4CE8-8E73-D21D42C5E6B2} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
@@ -60,5 +66,6 @@ Global
 		{32E1C659-6C82-43E3-AFDC-BA1B02355C8C} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 		{E43E6ECD-A400-4DD9-A611-FCE351EDA87B} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 		{F1FCA9F6-18F1-4620-A672-AC7A2FD7E08B} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
+		{2270E768-86DB-402D-B92B-B351BF9E0576} = {A53048F3-8E41-476D-A8FC-1A22F89EAE29}
 	EndGlobalSection
 EndGlobal

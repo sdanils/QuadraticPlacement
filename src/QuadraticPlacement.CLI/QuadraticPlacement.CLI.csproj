@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuadraticPlacement.Core\QuadraticPlacement.Core.csproj" />
+    <ProjectReference Include="..\QuadraticPlacement.Data\QuadraticPlacement.Data.csproj" />
+    <ProjectReference Include="..\QuadraticPlacement.Algorithms\QuadraticPlacement.Algorithms.csproj" />
+    <ProjectReference Include="..\QuadraticPlacement.Reporting\QuadraticPlacement.Reporting.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
