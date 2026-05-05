@@ -100,3 +100,5 @@
 /home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/obj/Debug/net8.0/QuadraticPlacement.Tests.pdb
 /home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/obj/Debug/net8.0/QuadraticPlacement.Tests.genruntimeconfig.cache
 /home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/obj/Debug/net8.0/ref/QuadraticPlacement.Tests.dll
+/home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/bin/Debug/net8.0/QuadraticPlacement.Algorithms.dll
+/home/dssalomasov/projects/home/integration_scheme/tests/QuadraticPlacement.Tests/bin/Debug/net8.0/QuadraticPlacement.Algorithms.pdb

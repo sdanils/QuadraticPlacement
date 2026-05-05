@@ -10,6 +10,7 @@
         "dependencies": {
           "FluentAssertions": "8.9.0",
           "Microsoft.NET.Test.Sdk": "17.8.0",
+          "QuadraticPlacement.Algorithms": "1.0.0",
           "QuadraticPlacement.Core": "1.0.0",
           "coverlet.collector": "6.0.0",
           "xunit": "2.5.3",
@@ -1030,6 +1031,17 @@
         }
       },
       "xunit.runner.visualstudio/2.5.3": {},
+      "QuadraticPlacement.Algorithms/1.0.0": {
+        "dependencies": {
+          "QuadraticPlacement.Core": "1.0.0"
+        },
+        "runtime": {
+          "QuadraticPlacement.Algorithms.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "QuadraticPlacement.Core/1.0.0": {
         "runtime": {
           "QuadraticPlacement.Core.dll": {
@@ -1675,6 +1687,11 @@
       "sha512": "sha512-HFFL6O+QLEOfs555SqHii48ovVa4CqGYanY+B32BjLpPptdE+wEJmCFNXlLHdEOD5LYeayb9EroaUpydGpcybg==",
       "path": "xunit.runner.visualstudio/2.5.3",
       "hashPath": "xunit.runner.visualstudio.2.5.3.nupkg.sha512"
+    },
+    "QuadraticPlacement.Algorithms/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "QuadraticPlacement.Core/1.0.0": {
       "type": "project",
