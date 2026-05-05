@@ -4,6 +4,16 @@ namespace QuadraticPlacement.CLI;
 
 class Program
 {
+    /// <summary>
+    /// Создаёт папку для выходных файлов с уникальным именем на основе временной метки
+    /// </summary>
+    static string CreateOutputDirectory(string baseName = "output")
+    {
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string dirName = $"{baseName}_{timestamp}";
+        Directory.CreateDirectory(dirName);
+        return dirName;
+    }
     static void Main(string[] args)
     {
         if (args.Length == 0)
@@ -81,7 +91,12 @@ class Program
         if (!int.TryParse(fixedStr, out int fixedCount))
             throw new Exception("Неверный формат --fixed");
 
+        // Создаём папку для выходных файлов
+        string outputDir = CreateOutputDirectory("generated");
+        string outputPath = Path.Combine(outputDir, output);
+
         Console.WriteLine($"Генерация графа: {vertices} вершин, {edges} рёбер, {fixedCount} фиксированных");
+        Console.WriteLine($"Папка вывода: {outputDir}");
 
         var graph = Data.GraphGenerator.GenerateRandom(vertices, edges, fixedCount);
 
@@ -90,7 +105,7 @@ class Program
             var json = System.Text.Json.JsonSerializer.Serialize(
                 Data.GraphDataContract.FromGraph(graph),
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(output, json);
+            File.WriteAllText(outputPath, json);
         }
         else
         {
@@ -100,10 +115,10 @@ class Program
                 lines.Add($"{edge.From} {edge.To}");
             foreach (var fv in graph.FixedVertices.Values)
                 lines.Add($"{fv.Index} {fv.X.ToString(System.Globalization.CultureInfo.InvariantCulture)} {fv.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
-            File.WriteAllLines(output, lines);
+            File.WriteAllLines(outputPath, lines);
         }
 
-        Console.WriteLine($"Граф сохранён в: {output}");
+        Console.WriteLine($"Граф сохранён в: {outputPath}");
     }
 
     static void HandleConvertCommand(string[] args)
@@ -136,6 +151,10 @@ class Program
         string algorithmStr = GetArgument(args, "--algorithm") ?? throw new Exception("Не указан --algorithm");
         string output = GetArgument(args, "--output") ?? throw new Exception("Не указан --output");
 
+        // Создаём папку для выходных файлов
+        string outputDir = CreateOutputDirectory("solved");
+        string outputPath = Path.Combine(outputDir, output);
+
         Console.WriteLine($"Загрузка графа из {input}...");
 
         var graphContent = File.ReadAllText(input);
@@ -151,6 +170,7 @@ class Program
         }
 
         Console.WriteLine($"Граф загружен: {graph.VertexCount} вершин, {graph.EdgeCount} рёбер");
+        Console.WriteLine($"Папка вывода: {outputDir}");
 
         Core.IPlacementSolver solver = algorithmStr.ToLower() switch
         {
@@ -192,8 +212,8 @@ class Program
             WriteIndented = true
         });
 
-        File.WriteAllText(output, json);
-        Console.WriteLine($"\nРезультат сохранён в: {output}");
+        File.WriteAllText(outputPath, json);
+        Console.WriteLine($"\nРезультат сохранён в: {outputPath}");
     }
 
     static void HandleReportCommand(string[] args)
@@ -202,8 +222,15 @@ class Program
         string output = GetArgument(args, "--output") ?? throw new Exception("Не указан --output");
         bool noViz = HasArgument(args, "--no-viz");
 
+        // Создаём папку для выходных файлов
+        string outputDir = CreateOutputDirectory("reports");
+
+        Console.WriteLine($"Папка вывода: {outputDir}");
+
         var orchestrator = new ReportOrchestrator();
-        orchestrator.GenerateFullReport(input, output, !noViz);
+        orchestrator.GenerateFullReport(input, outputDir, output, !noViz);
+
+        Console.WriteLine($"\nВсе файлы сохранены в папке: {outputDir}");
     }
 
     static string? GetArgument(string[] args, string name)

@@ -21,7 +21,8 @@ public class ReportOrchestrator
     /// </summary>
     public void GenerateFullReport(
         string graphPath,
-        string outputPath,
+        string outputDir,
+        string baseFileName,
         bool generateVisualizations = true)
     {
         Console.WriteLine("Загрузка графа...");
@@ -101,17 +102,17 @@ public class ReportOrchestrator
         Console.WriteLine("\nСоздание HTML отчётов...");
 
         var basicHtml = _reportBuilder.BuildReport(basicRun);
-        var basicReportPath = outputPath.Replace(".html", "_basic.html");
+        var basicReportPath = Path.Combine(outputDir, Path.GetFileNameWithoutExtension(baseFileName) + "_basic.html");
         File.WriteAllText(basicReportPath, basicHtml, System.Text.Encoding.UTF8);
         Console.WriteLine($"Отчёт базового алгоритма сохранён в: {basicReportPath}");
 
         var heuristicHtml = _reportBuilder.BuildReport(heuristicRun);
-        var heuristicReportPath = outputPath.Replace(".html", "_heuristic.html");
+        var heuristicReportPath = Path.Combine(outputDir, Path.GetFileNameWithoutExtension(baseFileName) + "_heuristic.html");
         File.WriteAllText(heuristicReportPath, heuristicHtml, System.Text.Encoding.UTF8);
         Console.WriteLine($"Отчёт эвристического алгоритма сохранён в: {heuristicReportPath}");
 
         // Создаём сравнительный отчёт
-        var comparisonReportPath = outputPath;
+        var comparisonReportPath = Path.Combine(outputDir, baseFileName);
         CreateComparisonReport(basicRun, heuristicRun, graphPath, comparisonReportPath);
         Console.WriteLine($"Сравнительный отчёт сохранён в: {comparisonReportPath}");
 
@@ -191,10 +192,13 @@ public class ReportOrchestrator
         sb.AppendLine("    </table>");
 
         // Ссылки на полные отчёты
+        var basicFileName = Path.GetFileNameWithoutExtension(outputPath) + "_basic.html";
+        var heuristicFileName = Path.GetFileNameWithoutExtension(outputPath) + "_heuristic.html";
+
         sb.AppendLine("    <div class='analysis-box'>");
         sb.AppendLine("      <h3>Полные отчёты</h3>");
-        sb.AppendLine("      <p><a href='_basic.html'>Отчёт базового алгоритма</a></p>");
-        sb.AppendLine("      <p><a href='_heuristic.html'>Отчёт эвристического алгоритма</a></p>");
+        sb.AppendLine($"      <p><a href='{basicFileName}'>Отчёт базового алгоритма</a></p>");
+        sb.AppendLine($"      <p><a href='{heuristicFileName}'>Отчёт эвристического алгоритма</a></p>");
         sb.AppendLine("    </div>");
 
         // Анализ
