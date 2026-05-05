@@ -19,33 +19,48 @@ public class BasicSolver : IPlacementSolver
     {
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-        // Строим матрицу Лапласа
+        // 1. Построить разреженную матрицу Лапласа
         var laplacian = BuildLaplacianMatrix(graph);
 
-        // Для базовой реализации используем простое размещение на единичной окружности
-        // В будущих версиях здесь будет решение системы Lx = 0
-        int n = graph.VertexCount;
-        var xCoords = new double[n];
-        var yCoords = new double[n];
+        // 2. Разделить вершины на фиксированные и свободные
+        var (freeIndices, fixedIndices) = PartitionVertices(graph);
 
-        for (int i = 0; i < n; i++)
+        if (freeIndices.Length == 0)
         {
-            double angle = 2 * Math.PI * i / n;
-            xCoords[i] = Math.Cos(angle);
-            yCoords[i] = Math.Sin(angle);
+            // Все вершины фиксированы
+            var x = new double[graph.VertexCount];
+            var y = new double[graph.VertexCount];
+            foreach (var (idx, fv) in graph.FixedVertices)
+            {
+                x[idx - 1] = fv.X;
+                y[idx - 1] = fv.Y;
+            }
+
+            stopwatch.Stop();
+            var metrics = CalculateMetrics(graph, x, y);
+            return new PlacementResult(x, y, metrics, stopwatch.Elapsed);
         }
+
+        // 3. Сформировать и решить систему для X координат
+        var (systemMatrixX, rhsX) = BuildLinearSystem(
+            laplacian, freeIndices, fixedIndices, graph, Coordinate.X);
+        var xFree = ConjugateGradientSolver.Solve(systemMatrixX, rhsX);
+        var xFull = AssembleCoordinates(
+            xFree, freeIndices, fixedIndices, graph, Coordinate.X);
+
+        // 4. Сформировать и решить систему для Y координат
+        var (systemMatrixY, rhsY) = BuildLinearSystem(
+            laplacian, freeIndices, fixedIndices, graph, Coordinate.Y);
+        var yFree = ConjugateGradientSolver.Solve(systemMatrixY, rhsY);
+        var yFull = AssembleCoordinates(
+            yFree, freeIndices, fixedIndices, graph, Coordinate.Y);
 
         stopwatch.Stop();
 
-        // Вычисляем метрики
-        var metrics = CalculateMetrics(graph, xCoords, yCoords);
+        // 5. Вычислить метрики
+        var metricsResult = CalculateMetrics(graph, xFull, yFull);
 
-        return new PlacementResult(
-            xCoords,
-            yCoords,
-            metrics,
-            stopwatch.Elapsed
-        );
+        return new PlacementResult(xFull, yFull, metricsResult, stopwatch.Elapsed);
     }
 
     /// <summary>
