@@ -80,6 +80,25 @@ public class BasicSolver : IPlacementSolver
     }
 
     /// <summary>
+    /// Разделяет вершины на фиксированные и свободные
+    /// </summary>
+    private (int[] freeIndices, int[] fixedIndices) PartitionVertices(Graph graph)
+    {
+        var free = new List<int>();
+        var fixedList = new List<int>();
+
+        for (int i = 1; i <= graph.VertexCount; i++)
+        {
+            if (graph.FixedVertices.ContainsKey(i))
+                fixedList.Add(i);
+            else
+                free.Add(i);
+        }
+
+        return (free.ToArray(), fixedList.ToArray());
+    }
+
+    /// <summary>
     /// Строит разреженную матрицу Лапласа в формате CSR
     /// L[i,i] = degree(i), L[i,j] = -1 если (i,j) - ребро
     /// </summary>
