@@ -61,4 +61,50 @@ public static class ConjugateGradientSolver
             result[i] = a[i] + scalar * b[i];
         }
     }
+
+    /// <summary>
+    /// Решает систему Ax = b методом сопряжённых градиентов
+    /// </summary>
+    public static double[] Solve(SparseMatrixCSR A, double[] b, double tolerance = DefaultTolerance)
+    {
+        int n = A.RowCount;
+        double[] x = new double[n];  // Начальное приближение = 0
+        double[] r = new double[n];  // Остаток
+        double[] p = new double[n];  // Направление поиска
+        double[] Ap = new double[n]; // A * p
+
+        // r = b - A * x (при x=0: r = b)
+        Array.Copy(b, r, n);
+        Array.Copy(r, p, n);
+
+        double rsOld = DotProduct(r, r);
+
+        for (int iter = 0; iter < MaxIterations; iter++)
+        {
+            // Ap = A * p
+            MultiplyMatrixVector(A, p, Ap);
+
+            double alpha = rsOld / DotProduct(p, Ap);
+
+            // x = x + alpha * p
+            AddVectors(x, p, alpha, x);
+
+            // r = r - alpha * Ap
+            AddVectors(r, Ap, -alpha, r);
+
+            double rsNew = DotProduct(r, r);
+
+            if (Math.Sqrt(rsNew) < tolerance)
+                break;
+
+            double beta = rsNew / rsOld;
+
+            // p = r + beta * p
+            AddVectors(r, p, beta, p);
+
+            rsOld = rsNew;
+        }
+
+        return x;
+    }
 }
