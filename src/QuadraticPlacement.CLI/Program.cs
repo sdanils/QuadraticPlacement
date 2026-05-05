@@ -68,7 +68,42 @@ class Program
 
     static void HandleGenerateCommand(string[] args)
     {
-        Console.WriteLine("Команда generate в разработке");
+        string output = GetArgument(args, "--output") ?? throw new Exception("Не указан --output");
+        string verticesStr = GetArgument(args, "--vertices") ?? throw new Exception("Не указан --vertices");
+        string edgesStr = GetArgument(args, "--edges") ?? throw new Exception("Не указан --edges");
+        string fixedStr = GetArgument(args, "--fixed") ?? throw new Exception("Не указан --fixed");
+        string format = GetArgument(args, "--format") ?? "text";
+
+        if (!int.TryParse(verticesStr, out int vertices))
+            throw new Exception("Неверный формат --vertices");
+        if (!int.TryParse(edgesStr, out int edges))
+            throw new Exception("Неверный формат --edges");
+        if (!int.TryParse(fixedStr, out int fixedCount))
+            throw new Exception("Неверный формат --fixed");
+
+        Console.WriteLine($"Генерация графа: {vertices} вершин, {edges} рёбер, {fixedCount} фиксированных");
+
+        var graph = Data.GraphGenerator.GenerateRandom(vertices, edges, fixedCount);
+
+        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(
+                Data.GraphDataContract.FromGraph(graph),
+                new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(output, json);
+        }
+        else
+        {
+            var lines = new List<string>();
+            lines.Add($"{graph.VertexCount} {graph.EdgeCount} {graph.FixedVertices.Count}");
+            foreach (var edge in graph.Edges)
+                lines.Add($"{edge.From} {edge.To}");
+            foreach (var fv in graph.FixedVertices.Values)
+                lines.Add($"{fv.Index} {fv.X.ToString(System.Globalization.CultureInfo.InvariantCulture)} {fv.Y.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
+            File.WriteAllLines(output, lines);
+        }
+
+        Console.WriteLine($"Граф сохранён в: {output}");
     }
 
     static void HandleConvertCommand(string[] args)
