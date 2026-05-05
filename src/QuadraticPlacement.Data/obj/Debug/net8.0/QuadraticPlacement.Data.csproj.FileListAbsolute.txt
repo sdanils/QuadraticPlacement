@@ -1,0 +1,15 @@
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/bin/Debug/net8.0/QuadraticPlacement.Data.deps.json
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/bin/Debug/net8.0/QuadraticPlacement.Data.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/bin/Debug/net8.0/QuadraticPlacement.Data.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/bin/Debug/net8.0/QuadraticPlacement.Core.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/bin/Debug/net8.0/QuadraticPlacement.Core.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.csproj.AssemblyReference.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.GeneratedMSBuildEditorConfig.editorconfig
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.AssemblyInfoInputs.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.AssemblyInfo.cs
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.csproj.CoreCompileInputs.cache
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/Quadrati.EBD095BC.Up2Date
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/refint/QuadraticPlacement.Data.dll
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/QuadraticPlacement.Data.pdb
+/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/obj/Debug/net8.0/ref/QuadraticPlacement.Data.dll

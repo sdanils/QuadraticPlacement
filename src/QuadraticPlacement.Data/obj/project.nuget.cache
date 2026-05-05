@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "3iJlmlexgLU=",
+  "success": true,
+  "projectFilePath": "/home/dssalomasov/projects/home/integration_scheme/src/QuadraticPlacement.Data/QuadraticPlacement.Data.csproj",
+  "expectedPackageFiles": [
+    "/home/dssalomasov/.nuget/packages/system.io.pipelines/10.0.7/system.io.pipelines.10.0.7.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/system.text.encodings.web/10.0.7/system.text.encodings.web.10.0.7.nupkg.sha512",
+    "/home/dssalomasov/.nuget/packages/system.text.json/10.0.7/system.text.json.10.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
