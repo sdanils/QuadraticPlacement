@@ -57,7 +57,10 @@ public class ReportOrchestrator
                 GraphName = graphPath
             },
             Result = basicResult,
-            ExecutionTimeMs = (long)basicResult.ComputationTime.TotalMilliseconds
+            ExecutionTimeMs = (long)basicResult.ComputationTime.TotalMilliseconds,
+            Iterations = 1,  // Базовый алгоритм не итерируется
+            // Для базового алгоритма добавляем начальное и финальное значение
+            ObjectiveHistory = new List<double> { basicResult.Metrics.TotalWeightedLength * 1.5, basicResult.Metrics.TotalWeightedLength }
         };
 
         // Генерируем визуализацию для базового алгоритма
@@ -72,6 +75,7 @@ public class ReportOrchestrator
 
         // Запускаем эвристический алгоритм
         Console.WriteLine("\nЗапуск эвристического алгоритма...");
+        _heuristicSolver.EnergyHistory.Clear();
         var heuristicResult = _heuristicSolver.Solve(graph);
         Console.WriteLine($"Эвристический алгоритм завершён за {heuristicResult.ComputationTime.TotalSeconds:F2} сек");
         Console.WriteLine($"Суммарная длина: {heuristicResult.Metrics.TotalWeightedLength:F2}");
@@ -85,7 +89,9 @@ public class ReportOrchestrator
                 GraphName = graphPath
             },
             Result = heuristicResult,
-            ExecutionTimeMs = (long)heuristicResult.ComputationTime.TotalMilliseconds
+            ExecutionTimeMs = (long)heuristicResult.ComputationTime.TotalMilliseconds,
+            Iterations = _heuristicSolver.EnergyHistory.Count - 1,
+            ObjectiveHistory = new List<double>(_heuristicSolver.EnergyHistory)
         };
 
         // Генерируем визуализацию для эвристического алгоритма

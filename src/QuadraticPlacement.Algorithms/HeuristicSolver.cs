@@ -212,6 +212,12 @@ public class HeuristicSolver : IPlacementSolver
         int stagnationCount = 0;
         const int maxStagnation = 10;  // Остановиться если нет улучшений 10 итераций подряд
 
+        // Отслеживаем историю энергии для отчётов
+        EnergyHistory.Clear();
+        double initialEnergy = ComputeSystemEnergy(graph, x, y);
+        EnergyHistory.Add(initialEnergy);
+
+        int actualIterations = 0;
         for (int iteration = 0; iteration < adaptiveMaxIterations; iteration++)
         {
             var (forcesX, forcesY) = ComputeForces(graph, x, y);
@@ -219,6 +225,8 @@ public class HeuristicSolver : IPlacementSolver
             UpdatePositions(x, y, forcesX, forcesY, graph, temperature);
 
             double currentEnergy = ComputeSystemEnergy(graph, x, y);
+            EnergyHistory.Add(currentEnergy);
+            actualIterations++;
 
             // Проверка на сходимость с учётом размера графа
             double energyThreshold = ConvergenceThreshold * Math.Max(1, graph.VertexCount / 1000.0);
@@ -243,6 +251,11 @@ public class HeuristicSolver : IPlacementSolver
 
         return new PlacementResult(x, y, metrics, stopwatch.Elapsed);
     }
+
+    /// <summary>
+    /// История значений энергии системы на каждой итерации
+    /// </summary>
+    public List<double> EnergyHistory { get; } = new();
 }
 
 /// <summary>
