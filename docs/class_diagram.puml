@@ -1,0 +1,349 @@
+@startuml QuadraticPlacementClassDiagram
+
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam nodesep 70
+skinparam ranksep 70
+skinparam packageStyle rectangle
+
+title Диаграмма классов — QuadraticPlacement\nСистема квадратичного размещения элементов
+
+' ============================================================
+' Пакет: Core
+' ============================================================
+package "QuadraticPlacement.Core" as core #E8F5E9 {
+
+    class Edge {
+        + From : int
+        + To : int
+        + Weight : double
+        + Edge(from: int, to: int, weight: double)
+    }
+
+    class FixedVertex {
+        + Index : int
+        + X : double
+        + Y : double
+        + FixedVertex(index: int, x: double, y: double)
+    }
+
+    class Graph {
+        + VertexCount : int
+        + EdgeCount : int
+        + Edges : IReadOnlyList<Edge>
+        + FixedVertices : IReadOnlyDictionary<int, FixedVertex>
+        + Graph(vertexCount: int, edges: IEnumerable<Edge>, fixedVertices: IDictionary<int, FixedVertex>)
+        - ValidateEdges()
+        - ValidateFixedVertices()
+    }
+
+    class Metrics {
+        + TotalWeightedLength : double
+        + MaxEdgeLength : double
+        + MinEdgeLength : double
+        + AverageEdgeLength : double
+        + Metrics(totalWeightedLength, maxEdgeLength, minEdgeLength, averageEdgeLength)
+    }
+
+    class PlacementResult {
+        + XCoordinates : double[]
+        + YCoordinates : double[]
+        + Metrics : Metrics
+        + ComputationTime : TimeSpan
+        + PlacementResult(xCoordinates, yCoordinates, metrics, computationTime)
+        + GetVertexCoordinates(index: int) : (double X, double Y)
+    }
+
+    interface IPlacementSolver {
+        + Name : string <<get>>
+        + Solve(graph: Graph) : PlacementResult
+    }
+
+    class PlacementException {
+        + PlacementException(message: string)
+        + PlacementException(message: string, inner: Exception)
+    }
+
+    class GraphParseException {
+        + LineNumber : int
+        + GraphParseException(message: string, lineNumber: int)
+    }
+
+    class ConvergenceException {
+        + IterationsCompleted : int
+        + FinalError : double
+        + ConvergenceException(message: string, iterations: int, error: double)
+    }
+
+    Graph o-- Edge : edges
+    Graph o-- FixedVertex : fixedVertices
+    PlacementResult *-- Metrics : metrics
+    PlacementException <|-- GraphParseException
+    PlacementException <|-- ConvergenceException
+}
+
+' ============================================================
+' Пакет: Algorithms
+' ============================================================
+package "QuadraticPlacement.Algorithms" as algo #E3F2FD {
+
+    class BasicSolver {
+        + Name : string <<get>>
+        + Solve(graph: Graph) : PlacementResult
+        - BuildLaplacianMatrix(graph: Graph) : SparseMatrixCSR
+        - PartitionVertices(graph: Graph) : (int[], int[])
+        - BuildLinearSystem(...) : (SparseMatrixCSR, double[])
+        - AssembleCoordinates(...) : double[]
+        - CalculateMetrics(graph, x, y) : Metrics
+    }
+
+    class HeuristicSolver {
+        + Name : string <<get>>
+        + EnergyHistory : List<double>
+        + Solve(graph: Graph) : PlacementResult
+        - InitializePositions(graph: Graph) : (double[], double[])
+        - ComputeForces(graph, x, y) : (double[], double[])
+        - UpdatePositions(x, y, fx, fy, graph, temperature)
+        - ComputeSystemEnergy(graph, x, y) : double
+        - CalculateMetrics(graph, x, y) : Metrics
+    }
+
+    class ConjugateGradientSolver <<static>> {
+        + Solve(A: SparseMatrixCSR, b: double[], tolerance: double) : double[]
+        - DotProduct(a: double[], b: double[]) : double
+        - MultiplyMatrixVector(A, x, result)
+        - AddVectors(a, b, scalar, result)
+    }
+
+    class SparseMatrixCSR <<struct>> {
+        + Values : double[]
+        + ColumnIndices : int[]
+        + RowPointers : int[]
+        + RowCount : int
+        + ColumnCount : int
+    }
+}
+
+IPlacementSolver <|.. BasicSolver
+IPlacementSolver <|.. HeuristicSolver
+BasicSolver ..> ConjugateGradientSolver : <<uses>>
+ConjugateGradientSolver ..> SparseMatrixCSR : <<uses>>
+BasicSolver ..> SparseMatrixCSR : <<uses>>
+
+' ============================================================
+' Пакет: Data
+' ============================================================
+package "QuadraticPlacement.Data" as data #FFF3E0 {
+
+    class GraphDataContract {
+        + VertexCount : int
+        + Edges : List<EdgeData>
+        + FixedVertices : List<FixedVertexData>
+        + {static} FromGraph(graph: Graph) : GraphDataContract
+        + ToGraph() : Graph
+    }
+
+    class "GraphDataContract.EdgeData" as EdgeData {
+        + From : int
+        + To : int
+        + Weight : double
+        + EdgeData()
+        + EdgeData(edge: Edge)
+    }
+
+    class "GraphDataContract.FixedVertexData" as FixedVertexData {
+        + Index : int
+        + X : double
+        + Y : double
+        + FixedVertexData()
+        + FixedVertexData(fv: FixedVertex)
+    }
+
+    class JsonGraphParser <<static>> {
+        + {static} Parse(json: string) : Graph
+        + {static} ParseFromFile(filePath: string) : Graph
+        + {static} ToJson(graph: Graph) : string
+        + {static} SaveToFile(graph: Graph, filePath: string)
+    }
+
+    class TextGraphParser <<static>> {
+        + {static} Parse(text: string) : Graph
+        + {static} ParseFromFile(filePath: string) : Graph
+        + {static} ToText(graph: Graph) : string
+        + {static} SaveToFile(graph: Graph, filePath: string)
+    }
+
+    class GraphFormatConverter <<static>> {
+        + {static} TextToJson(text: string) : string
+        + {static} TextFileToJsonFile(textFilePath, jsonFilePath)
+        + {static} JsonToText(json: string) : string
+        + {static} JsonFileToTextFile(jsonFilePath, textFilePath)
+    }
+
+    class GraphGenerator <<static>> {
+        + {static} GenerateRandom(vertexCount, edgeCount, ...) : Graph
+        + {static} GenerateGrid(rows, cols, ...) : Graph
+        + {static} GenerateWithHotConnections(...) : Graph
+        + {static} SetSeed(seed: int)
+    }
+}
+
+GraphDataContract *-- EdgeData
+GraphDataContract *-- FixedVertexData
+GraphFormatConverter ..> JsonGraphParser : <<uses>>
+GraphFormatConverter ..> TextGraphParser : <<uses>>
+JsonGraphParser ..> GraphDataContract : <<uses>>
+
+' ============================================================
+' Пакет: Reporting
+' ============================================================
+package "QuadraticPlacement.Reporting" as reporting #F3E5F5 {
+
+    class AlgorithmRun {
+        + Metadata : ReportMetadata
+        + Result : PlacementResult
+        + ExecutionTimeMs : long
+        + Iterations : int
+        + ObjectiveHistory : List<double>
+        + PlacementHistory : List<PlacementResult>
+        + Messages : List<string>
+        + Success : bool
+        + Visualizations : Dictionary<string, byte[]>
+        + AddVisualization(name: string, imageBytes: byte[])
+        + AddMessage(message: string)
+        + AddWarning(warning: string)
+        + AddError(error: string)
+        + GetObjectiveStatistics() : ObjectiveStatistics
+        + GetSummary() : string
+        - CalculateStandardDeviation(values: double[]) : double
+    }
+
+    class ObjectiveStatistics {
+        + Initial : double
+        + Final : double
+        + Minimum : double
+        + Maximum : double
+        + Average : double
+        + Median : double
+        + StandardDeviation : double
+        + ImprovementPercentage : double <<get>>
+    }
+
+    class ReportMetadata {
+        + ReportId : string
+        + GeneratedAt : DateTime
+        + GraphName : string
+        + Description : string
+        + AlgorithmName : string
+        + AlgorithmVersion : string
+        + Author : string
+        + Parameters : Dictionary<string, string>
+        + Tags : List<string>
+        + CustomData : Dictionary<string, object>
+        + Clone() : ReportMetadata
+        + ToString() : string
+    }
+
+    class HtmlReportBuilder {
+        + BuildReport(run: AlgorithmRun) : string
+        + SaveToFile(run: AlgorithmRun, filePath: string)
+        + GenerateReport(run: AlgorithmRun) : string
+        - AppendHtmlStart()
+        - AppendHead(metadata: ReportMetadata)
+        - AppendBodyStart()
+        - AppendHeader(metadata: ReportMetadata)
+        - AppendSummary(run: AlgorithmRun)
+        - AppendMetadata(metadata: ReportMetadata)
+        - AppendMetrics(run: AlgorithmRun)
+        - AppendVisualizations(run: AlgorithmRun)
+        - AppendObjectiveHistory(run: AlgorithmRun)
+        - AppendMessages(run: AlgorithmRun)
+        - AppendBodyEnd()
+        - AppendHtmlEnd()
+        - AppendMetricCard(label, value, unit)
+        - AppendTableRow(key, value)
+        - GetCssStyles() : string
+        - EscapeHtml(text: string) : string
+        - FormatTime(milliseconds: long) : string
+    }
+}
+
+AlgorithmRun *-- ReportMetadata : metadata
+AlgorithmRun *-- ObjectiveStatistics : <<creates>>
+HtmlReportBuilder ..> AlgorithmRun : <<uses>>
+
+' ============================================================
+' Пакет: Visualization
+' ============================================================
+package "QuadraticPlacement.Visualization" as viz #E0F7FA {
+
+    class ScatterPlotGenerator {
+        + GenerateScatterPlot(graph: Graph, placement: PlacementResult, w, h) : byte[]
+        + GenerateSimpleScatterPlot(placement: PlacementResult, fixedVertexIds: HashSet<int>, w, h) : byte[]
+        - AddEdgesToPlot(plot, graph, placement)
+    }
+
+    class HeatmapGenerator {
+        + GenerateHeatmap(placement: PlacementResult, gridSize, w, h) : byte[]
+        + GenerateLayeredHeatmap(graph: Graph, placement: PlacementResult, gridSize, w, h) : byte[]
+        - Compute2DHistogram(placement: PlacementResult, gridSize) : (double[,], double[], double[])
+    }
+}
+
+' ============================================================
+' Пакет: CLI
+' ============================================================
+package "QuadraticPlacement.CLI" as cli #FFEBEE {
+
+    class Program <<entry point>> {
+        + {static} Main(args: string[])
+        - {static} PrintUsage()
+        - {static} HandleGenerateCommand(args: string[])
+        - {static} HandleConvertCommand(args: string[])
+        - {static} HandleSolveCommand(args: string[])
+        - {static} HandleReportCommand(args: string[])
+        - {static} GetArgument(args, name) : string?
+        - {static} HasArgument(args, name) : bool
+        - {static} CreateOutputDirectory(baseName) : string
+    }
+
+    class ReportOrchestrator {
+        - _basicSolver : BasicSolver
+        - _heuristicSolver : HeuristicSolver
+        - _scatterGenerator : ScatterPlotGenerator
+        - _heatmapGenerator : HeatmapGenerator
+        - _reportBuilder : HtmlReportBuilder
+        + GenerateFullReport(graphPath, outputDir, baseFileName, generateVisualizations)
+        - CreateComparisonReport(basic, heuristic, graphPath, outputPath)
+        - GetCssStyles() : string
+    }
+}
+
+' ============================================================
+' Зависимости между пакетами
+' ============================================================
+
+Program ..> GraphGenerator : <<uses>>
+Program ..> TextGraphParser : <<uses>>
+Program ..> JsonGraphParser : <<uses>>
+Program ..> BasicSolver : <<uses>>
+Program ..> HeuristicSolver : <<uses>>
+Program ..> ReportOrchestrator : <<uses>>
+
+ReportOrchestrator ..> BasicSolver : <<uses>>
+ReportOrchestrator ..> HeuristicSolver : <<uses>>
+ReportOrchestrator ..> ScatterPlotGenerator : <<uses>>
+ReportOrchestrator ..> HeatmapGenerator : <<uses>>
+ReportOrchestrator ..> HtmlReportBuilder : <<uses>>
+
+' Пунктирные стрелки к Core
+BasicSolver ..> Graph : <<uses>>
+BasicSolver ..> PlacementResult : <<creates>>
+HeuristicSolver ..> Graph : <<uses>>
+HeuristicSolver ..> PlacementResult : <<creates>>
+AlgorithmRun ..> PlacementResult : <<contains>>
+ScatterPlotGenerator ..> Graph : <<uses>>
+ScatterPlotGenerator ..> PlacementResult : <<uses>>
+HeatmapGenerator ..> PlacementResult : <<uses>>
+
+@enduml
